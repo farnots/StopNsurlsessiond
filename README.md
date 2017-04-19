@@ -10,7 +10,12 @@ This script will look on *nsurlsessiond* processus and will kill them by getting
 
 - Download the script
 - Make sure you have the executive right (`chmod u+x ./StopNsurl.sh`)
-- Launch it with just `./StopNsurl.sh`
+
+### Utilisation 
+
+Launch it with just `./StopNsurl.sh`.
+
+**Verbose mode :** You can acces to the verbose mode by taping `./StopNsurl.sh -v`
 
 ### Stopping the script
 

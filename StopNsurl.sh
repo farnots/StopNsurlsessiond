@@ -29,6 +29,17 @@ spinner()
 	printf "    \b\b\b\b"
 }
 
+## Color ---------
+
+RED='\033[1;31m'
+BLUE='\033[1;34m'
+GREEN='\033[1;32m'
+ORANGE='\033[0;33m'
+NC='\033[0m'
+
+PROCESS="${BLUE}[PROCESS]${NC}"
+INFO="${GREEN}[INFO]${NC}"
+WARNING="${ORANGE}[WARNING]${NC}"
 
 ## Welcome pannel -----------
 
@@ -51,9 +62,9 @@ fi
 
 ## Removing the tempory file when exiting -----------
 
-function quitting {
+quitting () {
 	echo "\n"
-	echo "Removing tempory file"
+	echo "${INFO} Removing tempory file"
 	rm ./.nsurlsessiond
 	echo "+----------------------------------------+"
 	echo "| Stoping annihilation of nsurlsessiond  |"
@@ -63,21 +74,21 @@ function quitting {
 
 ## Core of the script : kill all nsurlsession and show them -----------
 
-function killIt {
+killIt () {
 	n=$(expr $line)
 	sudo kill $n
 }
 
 
-function speaking {
+speaking (){
 	printf "\n"
 	killIt
 	current_time="`date +%H:%M:%S`"
-	printf $current_time;
+	printf "${PROCESS} ${current_time}"
 	printf " - killing nsurlsessiond number :  $n"
 }
 
-function killNsurl {
+killNsurl () {
 	pgrep -x nsurlsessiond>./.nsurlsessiond
 	while read line ; do
 		if [ $verbose -eq 1 ] ; then
@@ -88,7 +99,7 @@ function killNsurl {
 	done <./.nsurlsessiond
 	if [ $verbose -eq 1 ] ; then
 		printf "\n"
-		printf "Probing for new nsurlsessiond process"
+		printf "${INFO} Probing for new nsurlsessiond process"
 	fi
 }
 
@@ -101,11 +112,11 @@ function waiting {
 ## While function -----------
 
 trap "quitting" SIGTERM SIGINT
-printf "Note : Password could be asked once to have the right to kill 'nsurlsessiond' \n"
+printf "${WARNING} Password could be asked once to have the right to kill 'nsurlsessiond' \n"
 if [ $verbose -eq 1 ] ; then
-	printf "Probing for new nsurlsessiond process  "
+	printf "${INFO} Probing for new nsurlsessiond process  "
 else
-	printf "Script is in progess ( '-v' to the verbose mode) : "
+	printf "${INFO} Script is in progess ( '-v' to the verbose mode) : "
 fi
 sleep 1
 while [[ 1 ]]; do
